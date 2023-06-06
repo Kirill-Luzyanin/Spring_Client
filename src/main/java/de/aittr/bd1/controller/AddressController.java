@@ -31,7 +31,7 @@ public class AddressController {
 
     @PostMapping(value="")
     @ResponseStatus(code= HttpStatus.CREATED)
-    public AddressResponseDTO addAccount(@RequestBody AddressRequestDTO address){
+    public AddressResponseDTO addAddress(@RequestBody AddressRequestDTO address){
         return service.addAddress(address);
     }
 

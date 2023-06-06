@@ -19,6 +19,7 @@ public class AppConfig {
             client.getAddress().setClient(client);
             return client;
         });
-        return new ModelMapper();
+
+        return mapper;
     }
 }
