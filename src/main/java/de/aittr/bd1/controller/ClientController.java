@@ -1,7 +1,10 @@
 package de.aittr.bd1.controller;
 
+import de.aittr.bd1.dto.AccountRequestDTO;
+import de.aittr.bd1.dto.AccountResponseDTO;
 import de.aittr.bd1.dto.ClientRequestDTO;
 import de.aittr.bd1.dto.ClientResponseDTO;
+import de.aittr.bd1.service.AccountService;
 import de.aittr.bd1.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,33 +17,46 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("clients")
 public class ClientController {
-    private final ClientService service;
+    private final ClientService clientService;
+    private final AccountService accountService;
+
 
     @GetMapping(value="")
     public List<ClientResponseDTO> getList(){
-        return service.getList();
+        return clientService.getList();
     }
 
     @GetMapping(value = "/{id}")
     public ClientResponseDTO getClient(@PathVariable(name = "id") Long id){
-        return service.getClient(id);
+        return clientService.getClient(id);
     }
 
     @PostMapping(value="")
     @ResponseStatus(code= HttpStatus.CREATED)
     public ClientResponseDTO addClient(@RequestBody ClientRequestDTO client){
-        return service.addClient(client);
+        return clientService.addClient(client);
     }
 
     @PutMapping(value="/{id}")
     public ClientResponseDTO updateClient(@PathVariable(name="id") Long id, @RequestBody ClientRequestDTO client){
-        return service.updateClient(id,client);
+        return clientService.updateClient(id,client);
     }
 
     @DeleteMapping(value="/{id}")
     public void addClient(@PathVariable(name="id") Long id){
-        service.deleteClient(id);
+        clientService.deleteClient(id);
     }
+
+
+    // чтобы добавлялся счет по такому mapping-у
+    //post /clients/{id}/accounts
+    @PostMapping(value="/{id}/accounts")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public AccountResponseDTO addAccount(@PathVariable(name = "id") Long clientId, @RequestBody AccountRequestDTO account){
+        AccountResponseDTO accountResponseDTO = accountService.addAccount(account, clientId);
+        return accountResponseDTO;
+    }
+
 
 
 }

@@ -5,6 +5,7 @@ import de.aittr.bd1.dto.AccountResponseDTO;
 import de.aittr.bd1.dto.ClientResponseDTO;
 import de.aittr.bd1.entity.Account;
 import de.aittr.bd1.entity.Client;
+import de.aittr.bd1.repository.ClientRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountServiceIml implements AccountService{
     private final JpaRepository<Account, Long> accountRepository;
+    private final JpaRepository<Client, Long> clientRepository;
+
     private final ModelMapper mapper;
 
     @Override
@@ -40,6 +43,19 @@ public class AccountServiceIml implements AccountService{
     }
 
     @Override
+    public AccountResponseDTO addAccount(AccountRequestDTO account, Long clientID){
+        Account entity = mapper.map(account, Account.class);
+        Client client = clientRepository.findById(clientID).get();
+
+        //TODO Mapper
+        entity.setClient(client);
+        client.getAccounts().add(entity);
+        Account savedAccount = accountRepository.save(entity);
+        AccountResponseDTO res = mapper.map(savedAccount, AccountResponseDTO.class);
+        return res;
+    }
+
+    @Override
     public AccountResponseDTO updateAccount(Long id, AccountRequestDTO account) {
         if (accountRepository.existsById(id)) {
             Account entity = mapper.map(account, Account.class);
@@ -54,4 +70,5 @@ public class AccountServiceIml implements AccountService{
     public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
+
 }

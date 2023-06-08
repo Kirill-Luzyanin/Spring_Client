@@ -21,7 +21,12 @@ public class Account {
     @Column(name="iban")
     private String iban;
 
-    //@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
-    @OneToOne(mappedBy = "account")
+    //@OneToOne(mappedBy = "account")
+    //@ManyToOne //(mappedBy = "account")
+    //private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
+
 }

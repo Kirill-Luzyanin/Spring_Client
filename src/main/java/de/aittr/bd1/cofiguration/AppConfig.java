@@ -15,8 +15,8 @@ public class AppConfig {
         TypeMap<ClientRequestDTO, Client> clientToEntity = mapper.createTypeMap(ClientRequestDTO.class, Client.class);
         clientToEntity.setPostConverter(d -> {
             Client client = d.getDestination();
-            client.getAccount().setClient(client);
-            client.getAddress().setClient(client);
+            //client.getAccount().setClient(client); TODO
+            //client.getAddress().setClient(client); TODO
             return client;
         });
 

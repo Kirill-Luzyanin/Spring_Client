@@ -27,10 +27,8 @@ public class Address {
     @Column (name="building")
     private int building;
 
-    @OneToOne(mappedBy = "address")
-    private Client client;
-
-
+    //@OneToOne(mappedBy = "address")
+    //private Client client;
 
 
 }

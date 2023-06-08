@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClientRequestDTO {
     private String name;
-    private AccountRequestDTO account;
+    //private AccountRequestDTO account;
     private AddressRequestDTO address;
 }

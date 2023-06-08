@@ -12,5 +12,6 @@ public interface AccountService {
     AccountResponseDTO updateAccount(Long id, AccountRequestDTO account);
     void deleteAccount(Long id);
 
+    AccountResponseDTO addAccount(AccountRequestDTO account, Long clientID);
 
 }
